@@ -1,5 +1,7 @@
 package tests;
 
+import com.codeborne.selenide.Configuration;
+import com.codeborne.selenide.Selenide;
 import org.junit.jupiter.api.*;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.*;
@@ -12,10 +14,19 @@ import static com.codeborne.selenide.Selectors.byText;
 import static com.codeborne.selenide.Selenide.*;
 
 public class LitresTest {
+   @BeforeAll
+    static void beforeAll() {
+        Configuration.browserSize = "1920x1080";
+        Configuration.pageLoadStrategy = "eager";
+    }
     @BeforeEach
     void beforeEach(){
         open("https://www.litres.ru/");
     }
+    @AfterEach
+        void afterEach() {
+            Selenide.closeWebDriver();
+        }
 
     @ValueSource(strings = {
             "Код  да Винчи", "Анна Каренина", "Пушкин"
